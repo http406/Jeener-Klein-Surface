@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeener-Klein Surface</title>
+    <style>
+        body { 
+        margin: 0; 
+        outline: none;
+        background: #000;
+        -webkit-tap-highlight-color: transparent;
+        }
+        canvas { display: block; }
+        #infoButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .info-popup {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            width: 300px;
+            text-align: left;
+            user-select: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <button id="infoButton">&#9432;</button>
+    <div class="info-popup" id="infoPopup">
+        <p style="text-align:center;" ><strong>Jeener-Klein Surface</strong></p>
+    <p style="color:pink; text-align: center;">The Jeener-Klein surface is a complex mathematical structure that represents a 3D visualization of a 4D geometric shape. It was designed by the French mathematician Patrice Jeener, who explored higher-dimensional topology and geometry. The Jeener-Klein surface is an extension of N-Klein surfaces, which generalize the Klein bottle, a non-orientable surface that exists in four-dimensional space.</p>
+            <p style="text-align:center;">For Equations visit my Github. Enjoy!</p>
+    </div>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Space background with stars
+        const starsGeometry = new THREE.BufferGeometry();
+        const starsVertices = [];
+        const starsColors = [];
+        for (let i = 0; i < 1000; i++) {
+            const x = (Math.random() - 0.5) * 100;
+            const y = (Math.random() - 0.5) * 100;
+            const z = (Math.random() - 0.5) * 100;
+            starsVertices.push(x, y, z);
+            const color = new THREE.Color("hsl(" + Math.random() * 360 + ",100%,80%)");
+            starsColors.push(color.r, color.g, color.b);
+        }
+        starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+        starsGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starsColors, 3));
+        const starsMaterial = new THREE.PointsMaterial({ size: 0.1, vertexColors: true });
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+
+        const a = 2.5, s = 3, t = 5;
+        const scale = 0.8;
+        const geometry = new THREE.BufferGeometry();
+        const vertices = [];
+        const colors = [];
+        const indices = [];
+        const uSegments = 100, vSegments = 100;
+        const uStep = 2 * Math.PI / uSegments;
+        const vStep = 2 * Math.PI / vSegments;
+
+        for (let i = 0; i <= uSegments; i++) {
+            const u = i * uStep;
+            for (let j = 0; j <= vSegments; j++) {
+                const v = j * vStep;
+                const w = ((s + 1) / 4) * Math.cos((s + 1) * v + Math.PI / t) + Math.sqrt(a);
+
+                const x = scale * (Math.cos(u) + Math.cos(v) - w * Math.sin((u - 1) * w / 2) * Math.cos(v));
+                const y = scale * (w * Math.sin(u));
+                const z = scale * (Math.sin(u) - Math.sin(v) - w * Math.cos((u - 1) * w / 2) * Math.cos(v));
+                
+                vertices.push(x, y, z);
+                const color = new THREE.Color("hsl(" + (i / uSegments) * 360 + ",100%,50%)");
+                colors.push(color.r, color.g, color.b);
+            }
+        }
+
+        for (let i = 0; i < uSegments; i++) {
+            for (let j = 0; j < vSegments; j++) {
+                const a = i * (vSegments + 1) + j;
+                const b = a + vSegments + 1;
+                const c = a + 1;
+                const d = b + 1;
+                indices.push(a, b, c);
+                indices.push(b, d, c);
+            }
+        }
+
+        geometry.setIndex(indices);
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+        const material = new THREE.MeshBasicMaterial({ vertexColors: true, wireframe: true });
+        const surface = new THREE.Mesh(geometry, material);
+        scene.add(surface);
+
+        camera.position.z = 10;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            surface.rotation.x += 0.01;
+            surface.rotation.y += 0.01;
+            stars.rotation.y += 0.002;
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
+        
+        $("#infoButton").click(function() {
+            $("#infoPopup").fadeToggle();
+        });
+    </script>
+</body>
+      </html>
+                                     
