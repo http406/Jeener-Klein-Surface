@@ -10,21 +10,7 @@ This surface is generated using a parametric equation, which allows for the repr
 ### **Breaking Down the Equation in Your Code**
 The parametric equations for the Jeener-Klein surface in your code are:
 
-\[
-x = \cos(u) + \cos(su) - w \sin\left(\frac{(s - 1)u}{2}\right) \cos(v)
-\]
-
-\[
-y = w \sin(u)
-\]
-
-\[
-z = \sin(u) - \sin(su) - w \cos\left(\frac{(s - 1)u}{2}\right) \cos(v)
-\]
-
-\[
-w = \frac{s + 1}{4} \cdot \cos\left((s + 1)u + \frac{\pi}{t}\right) + \sqrt{a}
-\]
+![Image](https://github.com/user-attachments/assets/6ca6bf64-3d4b-407e-8f37-729063267a57)
 
 where:  
 - \( u, v \) are the parameters that define the surface.
