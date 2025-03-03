@@ -41,7 +41,7 @@ where:
 
 2. **\( w \) is a scaling function**  
    - It controls how the surface stretches and deforms based on \( u \) and parameters like \( s \) and \( t \).
-   - The square root term \( \sqrt{a} \) ensures the function remains well-behaved.
+   - The square root term ✓a ensures the function remains well-behaved.
 
 3. **The sine and cosine terms create periodic and self-intersecting behavior**, producing the intricate looping and twisted shape seen in the image.
 
