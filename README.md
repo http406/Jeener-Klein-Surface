@@ -38,5 +38,3 @@ The Jeener-Klein surface is a fascinating structure because it:
 - **Demonstrates the intersection of art and mathematics**, with its elegant, colorful shape.
 - **Represents a visualization of higher-dimensional topology**, helping in the study of non-orientable surfaces.
 - **Has applications in physics, computer graphics, and topology**, particularly in understanding higher-dimensional objects in a 3D space.
-
-Would you like to modify the parameters to see different variations of this surface? 😊
